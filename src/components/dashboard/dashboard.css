@@ -1,0 +1,13 @@
+.align-horizontal{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    margin-left: 5%;
+    margin-right: 5%;
+    }
+.map-flex{
+    flex:0.5;
+    }
+.list-flex{
+    flex:0.4;
+    }
