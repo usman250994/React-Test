@@ -6,7 +6,7 @@ import './map.css';
 
 const MapComponnt = () => (
     <MyContext.Consumer>
-        {({markers}) => (
+        {({ markers }) => (
             <Map
                 google={window.google}
                 zoom={5}
@@ -27,6 +27,5 @@ const MapComponnt = () => (
 );
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyCCNwJd2BNJrKv-2QUvXk7rDD-T7zuraXQ'
-
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY
 })(MapComponnt)
