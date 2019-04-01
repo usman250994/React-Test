@@ -9,7 +9,7 @@ In the project directory, you can run:
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## COnfiguration:
+## Configuration:
 You need to create an `.env` file in root directory and copy keys from the sample env. to run the app. Also I can deploy it on AWS for live test. Please notify me.
 
 ### `npm test`
@@ -79,7 +79,7 @@ Well, It can be the case that Google api key is not responding, is invalid or ex
 ## Migratation to another location service proivider (apart from Google Api)
 
 Well, Just a simple dump component is dedicated to Google Maps and  the key to api is in `.env`
-file. We can change it any time. No need to hurt the whole application. Alos we can change the markers associated with the maps api in markers component. Rest rendering logic will be safe in ther components and will be implemented as it is. Isn't it? 
+file. We can change it any time. No need to hurt the whole application. Also we can change the markers associated with the maps api in markers component. Rest rendering logic will be safe in ther components and will be implemented as it is. Isn't it? 
 
 ## Improvements; further implementations
 
