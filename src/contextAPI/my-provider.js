@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import MyContext from './my-context';
 import { checkAddress } from '../shared/services/geolocation-services';
 import { googleMapExists } from '../shared/helpers/utilities';
+import { networkError, errorColor, errorTime, errorType } from '../shared/constants';
 import { getAllMarkers, deleteMarkerById, updateMarkerbyId, addMarker } from '../shared/services/marker-service';
+import { notify } from 'react-notify-toast';
 
 class MyProvider extends Component {
     state = {
@@ -19,7 +21,11 @@ class MyProvider extends Component {
 
     componentDidMount() {
         this.enableLoader();
-        getAllMarkers().then(res => { this.setState({ markers: res.data }, this.enableLoader()) });
+        getAllMarkers().then(res => { this.setState({ markers: res.data }, this.enableLoader()) })
+            .catch(() => {
+                this.enableLoader();
+                notify.show(networkError, errorType, errorTime, errorColor);
+            })
     }
 
     toggleForm = () => {
@@ -52,12 +58,16 @@ class MyProvider extends Component {
 
     updateMarker = (mark, prevId) => {
         delete mark.id
-        updateMarkerbyId(prevId, mark).then(res => {
+        updateMarkerbyId(prevId, mark).then(() => {
             let markers = [...this.state.markers];
             const index = markers.findIndex(marker => marker.id === prevId);
             markers[index] = { ...mark, id: prevId };
             this.setState({ markers, showForm: false, }, this.enableLoader());
-        });
+        })
+            .catch(() => {
+                this.enableLoader();
+                notify.show(networkError, errorType, errorTime, errorColor);
+            })
     }
 
     editMarker = (id) => {
@@ -70,7 +80,14 @@ class MyProvider extends Component {
 
     deleteMarker = (id) => {
         this.enableLoader();
-        deleteMarkerById(id).then(() => this.setState({ markers: this.state.markers.filter(marker => marker.id !== id) }, this.enableLoader()));
+        deleteMarkerById(id).then(
+            () => this.setState({
+                markers: this.state.markers.filter(marker => marker.id !== id)
+            }, this.enableLoader()))
+            .catch(() => {
+                 this.enableLoader();
+                 notify.show(networkError, errorType, errorTime, errorColor);
+            })
     }
 
     addNewMarker = (marker) => {
@@ -79,7 +96,10 @@ class MyProvider extends Component {
                 markers: [...this.state.markers, res.data],
                 showForm: false,
             }, this.enableLoader());
-        });
+        }).catch(() => {
+            this.enableLoader();
+            notify.show(networkError, errorType, errorTime, errorColor);
+        })
 
     };
 
